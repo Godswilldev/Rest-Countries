@@ -1,0 +1,62 @@
+.country {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 20rem 17rem;
+  box-shadow: 0.3rem 0.3rem 0.3rem rgba($color: #000000, $alpha: 0.3);
+  border-radius: 0.5rem;
+  overflow: hidden;
+  &__image {
+    background-color: yellow;
+    overflow: hidden;
+    &--img {
+      width: 100%;
+      height: 100%;
+    }
+  }
+  &__info {
+    background-color: red;
+    padding: 2.5rem;
+    span {
+      font-weight: 300;
+    }
+
+    &--name {
+      margin-bottom: 1rem;
+    }
+    &--region {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    &--capital {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+    &--population {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+  }
+}
+
+.countries {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(23rem, 1fr));
+  grid-gap: 5rem;
+}
+.main {
+  width: 85%;
+  margin: 5rem auto;
+}
+.actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4rem;
+  @include respond(phone) {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

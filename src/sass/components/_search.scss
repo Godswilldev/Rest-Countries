@@ -1,0 +1,24 @@
+.search {
+  &__input {
+    border-radius: 0.5rem;
+    background-color: $Dark-BlueDarkModeElements;
+    width: 40rem;
+    height: 4.5rem;
+    color: $White-DarkModeText-Light-ModeElements;
+    outline: none;
+    border: none;
+    padding: 0 3rem;
+    box-shadow: 0.3rem 0.3rem 0.3rem rgba($color: #000000, $alpha: 0.3);
+
+    &::placeholder {
+      color: $White-DarkModeText-Light-ModeElements;
+    }
+
+    @include respond(phone) {
+      margin-bottom: 3rem;
+    }
+    @include respond(small-phone) {
+      width: 32rem;
+    }
+  }
+}
