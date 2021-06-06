@@ -3,7 +3,7 @@ import Country from "./components/Country";
 import Dropdown from "./components/Dropdown";
 import Navbar from "./components/Navbar";
 import Search from "./components/Search";
-import { Route } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import axios from "axios";
 import uuid from "uuid/v4";
 import CountryDetails from "./components/CountryDetails";
@@ -39,31 +39,33 @@ class App extends Component {
     return (
       <div className="app">
         <Navbar />
-        <Route
-          exact
-          path="/"
-          render={() => (
-            <div className="main">
-              <div className="actions">
-                <Search getSearch={this.getSearch} />
-                <Dropdown />
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <div className="main">
+                <div className="actions">
+                  <Search getSearch={this.getSearch} />
+                  <Dropdown />
+                </div>
+                <div className="countries">
+                  {filteredCountries.map((country) => (
+                    <Country
+                      key={uuid()}
+                      name={country.name}
+                      img={country.flag}
+                      population={country.population}
+                      region={country.region}
+                      capital={country.capital}
+                    />
+                  ))}
+                </div>
               </div>
-              <div className="countries">
-                {filteredCountries.map((country) => (
-                  <Country
-                    key={uuid()}
-                    name={country.name}
-                    img={country.flag}
-                    population={country.population}
-                    region={country.region}
-                    capital={country.capital}
-                  />
-                ))}
-              </div>
-            </div>
-          )}
-        />
-        <Route exact path="/country" render={() => <CountryDetails />} />
+            )}
+          />
+          <Route exact path="/country" render={() => <CountryDetails />} />
+        </Switch>
       </div>
     );
   }
