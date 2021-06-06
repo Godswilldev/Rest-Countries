@@ -3,7 +3,7 @@ import Country from "./components/Country";
 import Dropdown from "./components/Dropdown";
 import Navbar from "./components/Navbar";
 import Search from "./components/Search";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Link } from "react-router-dom";
 import axios from "axios";
 import uuid from "uuid/v4";
 import CountryDetails from "./components/CountryDetails";
@@ -84,14 +84,16 @@ class App extends Component {
                 </div>
                 <div className="countries">
                   {filteredCountries.map((country) => (
-                    <Country
-                      key={uuid()}
-                      name={country.name}
-                      img={country.flag}
-                      population={country.population}
-                      region={country.region}
-                      capital={country.capital}
-                    />
+                    <Link exact to={`/country/${country.name}`}>
+                      <Country
+                        key={uuid()}
+                        name={country.name}
+                        img={country.flag}
+                        population={country.population}
+                        region={country.region}
+                        capital={country.capital}
+                      />
+                    </Link>
                   ))}
                 </div>
               </div>
