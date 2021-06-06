@@ -1,14 +1,9 @@
 import React, { Component } from "react";
 
 class Search extends Component {
-  state = {
-    search: "",
-  };
-  handleChange = (evt) => {
-    const { name, value } = evt.target;
-    this.setState({
-      [name]: value,
-    });
+  handleSearch = (evt) => {
+    const { value } = evt.target;
+    this.props.getSearch(value);
   };
   render() {
     return (
@@ -18,8 +13,7 @@ class Search extends Component {
           name="search"
           id="search"
           placeholder="Search for a country..."
-          onChange={this.handleChange}
-          value={this.state.search}
+          onChange={this.handleSearch}
           className="search__input"
         />
       </form>
