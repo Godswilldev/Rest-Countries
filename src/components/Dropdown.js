@@ -40,11 +40,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function Dropdown() {
+export default function Dropdown(props) {
   const classes = useStyles();
   const [region, setRegion] = React.useState("");
   const handleChange = (event) => {
     setRegion(event.target.value);
+    props.getRegion(event.target.value);
   };
   return (
     <div>
@@ -59,8 +60,9 @@ export default function Dropdown() {
           onChange={handleChange}
           input={<BootstrapInput />}
         >
+          <MenuItem value="all">All</MenuItem>
           <MenuItem value="africa">Africa</MenuItem>
-          <MenuItem value="america">America</MenuItem>
+          <MenuItem value="americas">America</MenuItem>
           <MenuItem value="asia">Asia</MenuItem>
           <MenuItem value="europe">Europe</MenuItem>
           <MenuItem value="oceania">Oceania</MenuItem>

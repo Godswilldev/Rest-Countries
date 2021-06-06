@@ -12,29 +12,62 @@ class App extends Component {
   state = {
     allCountries: [],
     search: "",
+    region: "",
   };
 
+  //request to get and display all countries
   async componentDidMount() {
-    console.log("inside componendDidMount");
     try {
       const { data } = await axios.get("https://restcountries.eu/rest/v2/all");
       this.setState({
         allCountries: data,
       });
-      console.log(data);
     } catch (error) {
       console.log(error);
     }
   }
+  ///// get search query
   getSearch = (query) => this.setState({ search: query.trim() });
 
+  //// get region and make another request based off the region, then setstate to render the countries in that region
+  getRegion = async (region) => {
+    await this.setState({ region: region.toLowerCase() });
+
+    if (region === "all") {
+      try {
+        const { data } = await axios.get(
+          "https://restcountries.eu/rest/v2/all"
+        );
+        this.setState({
+          allCountries: data,
+        });
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      try {
+        const { data } = await axios.get(
+          `https://restcountries.eu/rest/v2/region/${this.state.region}`
+        );
+        let countryRegions = this.state.allCountries.slice();
+        countryRegions = data;
+        this.setState({ allCountries: countryRegions });
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  };
+
   render() {
+    //Live search filter functionality, to filter out the countries based on the search input
     const { allCountries, search } = this.state;
-    const filteredCountries = allCountries.filter(
-      (country) =>
-        country.name.toLowerCase().includes(search.toLowerCase()) ||
-        country.capital.toLowerCase().includes(search.toLowerCase())
-    );
+    let filteredCountries = allCountries
+      .slice()
+      .filter(
+        (country) =>
+          country.name.toLowerCase().includes(search.toLowerCase()) ||
+          country.capital.toLowerCase().includes(search.toLowerCase())
+      );
 
     return (
       <div className="app">
@@ -47,7 +80,7 @@ class App extends Component {
               <div className="main">
                 <div className="actions">
                   <Search getSearch={this.getSearch} />
-                  <Dropdown />
+                  <Dropdown getRegion={this.getRegion} />
                 </div>
                 <div className="countries">
                   {filteredCountries.map((country) => (
@@ -64,7 +97,11 @@ class App extends Component {
               </div>
             )}
           />
-          <Route exact path="/country" render={() => <CountryDetails />} />
+          <Route
+            exact
+            path="/country/:countryname"
+            render={() => <CountryDetails />}
+          />
         </Switch>
       </div>
     );
