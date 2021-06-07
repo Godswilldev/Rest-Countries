@@ -68,6 +68,13 @@ class App extends Component {
           country.name.toLowerCase().includes(search.toLowerCase()) ||
           country.capital.toLowerCase().includes(search.toLowerCase())
       );
+    const getCountry = (routeProps) => {
+      const { countryName } = routeProps.match.params;
+      const country = this.state.allCountries.find(
+        (country) => country.name.toLowerCase() === countryName.toLowerCase()
+      );
+      return <CountryDetails {...routeProps} country={country} />;
+    };
 
     return (
       <div className="app">
@@ -84,9 +91,8 @@ class App extends Component {
                 </div>
                 <div className="countries">
                   {filteredCountries.map((country) => (
-                    <Link exact to={`/country/${country.name}`}>
+                    <Link key={uuid()} exact to={`/country/${country.name}`}>
                       <Country
-                        key={uuid()}
                         name={country.name}
                         img={country.flag}
                         population={country.population}
@@ -99,11 +105,8 @@ class App extends Component {
               </div>
             )}
           />
-          <Route
-            exact
-            path="/country/:countryname"
-            render={() => <CountryDetails />}
-          />
+          <Route exact path="/country/:countryName" render={getCountry} />
+          <Route render={() => <h1>Error 404 not found</h1>} />
         </Switch>
       </div>
     );
