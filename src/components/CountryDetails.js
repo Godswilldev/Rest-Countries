@@ -44,7 +44,7 @@ class CountryDetails extends Component {
             <span key={idx}>{language.name}</span>
           ))}
         </p>
-        <p className="">
+        {/* <p className="">
           Border Countries:
           {country.borders.map((border, idx) => (
             <Link
@@ -56,7 +56,7 @@ class CountryDetails extends Component {
               <button>{border}</button>
             </Link>
           ))}
-        </p>
+        </p> */}
       </div>
     );
   }
